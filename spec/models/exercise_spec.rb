@@ -1,5 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Exercise, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:exercise) { Exercise.create!(name: 'Squat', description: 'squat bellow 90°', intensity: 4) }
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:description) }
+    it { is_expected.to validate_presence_of(:intensity) }
+    it { is_expected.to validate_inclusion_of(:intensity).in_range(0..10) }
+  end
+
+  describe "associations" do
+    it { is_expected.to have_and_belong_to_many(:routines) }
+  end
 end
