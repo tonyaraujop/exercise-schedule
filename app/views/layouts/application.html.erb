@@ -11,6 +11,16 @@
   </head>
 
   <body>
-    <%= yield %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <% if user_signed_in? %>
+      <a href="/">Home</a>
+      <a href="/routines">Routines</a>
+      <a href="/exercises">Exercises</a>
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <a href="/users/sign_in">Sign in</a>
+    <% end %>
+     <%= yield %>
   </body>
 </html>

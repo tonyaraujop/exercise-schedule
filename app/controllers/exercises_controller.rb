@@ -30,7 +30,7 @@ class ExercisesController < ApplicationController
   def destroy
     @exercise.destroy
 
-    redirect_to exercises_path, notice: "Exercise was successfully destroyed." }
+    redirect_to exercises_path, notice: "Exercise was successfully destroyed."
   end
 
   private
