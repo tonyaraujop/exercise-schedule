@@ -2,7 +2,6 @@
 
 <table id="routines">
   <tr>
-    <th><strong>Exercise name</strong></th>
     <th><strong>Exercise description</strong></th>
     <th><strong>Exercise intensity</strong></th>
     <tr>
@@ -11,7 +10,6 @@
   </tr>
   <% @routine.exercises.each do |exercise| %>
     <tr>
-      <td><%= exercise.name %></td>
       <td><%= exercise.description %></td>
       <td><%= exercise.intensity %></td>
     </tr>
