@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Exercises</h1>
+<table>
+  <tr>
+    <th><strong>Name</strong></th>
+    <th><strong>Description</strong></th>
+    <th><strong>Intensity</strong></th>
+  </tr>
+  <div id="exercises">
+    <% @exercises.each do |exercise| %>
+  <tr>
+    <td><%= exercise.name %></td>
+    <td><%= exercise.description %></td>
+    <td><%= exercise.intensity %></td>
+    <td><%= link_to "Show this exercise", exercise %></td>
+  </tr>
+    <% end %>
+  </div>
+</table>
+
+<%= link_to "New exercise", new_exercise_path %>
