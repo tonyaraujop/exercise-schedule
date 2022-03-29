@@ -1,43 +1,44 @@
 require 'rails_helper'
 
 RSpec.describe "/routines", type: :request do
-  
+  let(:squat) {Exercise.create!(description: 'Squat', intensity: 4)}
+  let(:snatch) {Exercise.create!(description: 'Snatch', intensity: 10)}
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {:name => 'Monday', :exercise_ids => [squat.id, snatch.id]}
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:user) { User.create(email: 'test@test.com', password: '123456') }
+  let(:headers) { { Authorization: sign_in(user) } }
 
   describe "GET /index" do
     it "renders a successful response" do
       Routine.create! valid_attributes
-      get routines_url
-      expect(response).to be_successful
+      get routines_path
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
       routine = Routine.create! valid_attributes
-      get routine_url(routine)
-      expect(response).to be_successful
+      get routine_path(routine), headers: headers
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_routine_url
-      expect(response).to be_successful
+      get new_routine_path, headers: headers
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /edit" do
     it "render a successful response" do
       routine = Routine.create! valid_attributes
-      get edit_routine_url(routine)
-      expect(response).to be_successful
+      get edit_routine_path(routine), headers: headers
+      expect(response).to have_http_status(:success)
     end
   end
 
@@ -45,26 +46,13 @@ RSpec.describe "/routines", type: :request do
     context "with valid parameters" do
       it "creates a new Routine" do
         expect {
-          post routines_url, params: { routine: valid_attributes }
+          post routines_path, headers: headers, params: { routine: valid_attributes }
         }.to change(Routine, :count).by(1)
       end
 
       it "redirects to the created routine" do
-        post routines_url, params: { routine: valid_attributes }
-        expect(response).to redirect_to(routine_url(Routine.last))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Routine" do
-        expect {
-          post routines_url, params: { routine: invalid_attributes }
-        }.to change(Routine, :count).by(0)
-      end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post routines_url, params: { routine: invalid_attributes }
-        expect(response).to be_successful
+        post routines_path, headers: headers, params: { routine: valid_attributes }
+        expect(response).to redirect_to(routine_path(Routine.last))
       end
     end
   end
@@ -72,29 +60,21 @@ RSpec.describe "/routines", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {:name => 'Sunday', :exercise_ids => [squat.id, snatch.id]}
       }
 
       it "updates the requested routine" do
         routine = Routine.create! valid_attributes
-        patch routine_url(routine), params: { routine: new_attributes }
+        patch routine_path(routine), headers: headers, params: { routine: new_attributes }
         routine.reload
-        skip("Add assertions for updated state")
+        expect(response).to have_http_status(:found)
       end
 
       it "redirects to the routine" do
         routine = Routine.create! valid_attributes
-        patch routine_url(routine), params: { routine: new_attributes }
+        patch routine_path(routine), headers: headers, params: { routine: new_attributes }
         routine.reload
-        expect(response).to redirect_to(routine_url(routine))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        routine = Routine.create! valid_attributes
-        patch routine_url(routine), params: { routine: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(routine_path(routine))
       end
     end
   end
@@ -103,14 +83,14 @@ RSpec.describe "/routines", type: :request do
     it "destroys the requested routine" do
       routine = Routine.create! valid_attributes
       expect {
-        delete routine_url(routine)
+        delete routine_path(routine), headers: headers
       }.to change(Routine, :count).by(-1)
     end
 
     it "redirects to the routines list" do
       routine = Routine.create! valid_attributes
-      delete routine_url(routine)
-      expect(response).to redirect_to(routines_url)
+      delete routine_path(routine), headers: headers
+      expect(response).to redirect_to(routines_path)
     end
   end
 end
