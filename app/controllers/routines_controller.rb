@@ -1,5 +1,6 @@
 class RoutinesController < ApplicationController
   before_action :set_routine, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!, only: %i[ index ]
 
   def index
     @routines = Routine.all
