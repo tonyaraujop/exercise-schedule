@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Routines</h1>
+
+<table>
+  <tr>
+    <th><strong>Name</strong></th>
+  </tr>
+  <div id="routines">
+    <% @routines.each do |routine| %>
+  <tr>
+    <td><%= routine.name %></td>
+    <td><%= link_to "Show this routine", routine %></td>
+  </tr>
+    <% end %>
+  </div>
+</table>
+
+<%= link_to "New routine", new_routine_path %>
