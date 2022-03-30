@@ -54,6 +54,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'simplecov', require: false
+  gem 'dotenv-rails', '~> 2.7.6'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -77,3 +79,4 @@ end
 
 gem 'rubocop', '~> 1.26.1', require: false
 gem 'devise', '~> 4.0'
+gem 'jwt', '~> 2.3.0'
