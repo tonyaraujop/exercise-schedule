@@ -11,6 +11,7 @@ RSpec.describe "/routines", type: :request do
   let(:user) { User.create(email: 'test@test.com', password: '123456') }
   let(:headers) { { Authorization: sign_in(user) } }
 
+  before { user.confirm }
   describe "GET /index" do
     it "renders a successful response" do
       Routine.create! valid_attributes
