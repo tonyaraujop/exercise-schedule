@@ -1,0 +1,10 @@
+<%= form_with(model: routine) do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <%= form.collection_check_boxes :exercise_ids, Exercise.all, :id, :description %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
