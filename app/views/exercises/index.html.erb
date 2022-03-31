@@ -8,10 +8,10 @@
   </tr>
   <div id="exercises">
     <% @exercises.each do |exercise| %>
-  <tr>
-    <td><%= exercise.description %></td>
-    <td><%= link_to "Show this exercise", exercise %></td>
-  </tr>
+      <tr>
+        <td><%= exercise.description %></td>
+        <td><%= link_to "Show this exercise", exercise %></td>
+      </tr>
     <% end %>
   </div>
 </table>
